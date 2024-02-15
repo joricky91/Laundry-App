@@ -11,6 +11,10 @@ import PhotosUI
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @Query(filter: #Predicate<LaundryImage> { laundry in
+        laundry.isChecked
+    }) var laundry: [LaundryImage]
+    
     @Query private var items: [LaundryImage]
     
     @State private var avatarItem: PhotosPickerItem?
@@ -20,15 +24,36 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    LazyVGrid(columns: gridItems, spacing: 20) {
-                        ForEach(items) { item in
-                            if let image = UIImage(data: item.image) {
-                                ImageView(image: image, isChecked: item.isChecked) {
-                                    updateItem(item: item)
+                VStack(alignment: .leading, spacing: 20) {
+                    if laundry.isEmpty {
+                        ContentUnavailableView("Empty Laundry", systemImage: "washer.fill", description: Text("No clothes currently in laundry"))
+                    } else {
+                        LazyVGrid(columns: gridItems, spacing: 20) {
+                            ForEach(laundry) { item in
+                                if let image = UIImage(data: item.image) {
+                                    ImageView(image: image, isChecked: item.isChecked) {
+                                        updateItem(item: item)
+                                    }
                                 }
-                            } else {
-                                ContentUnavailableView("No saved images yet", systemImage: "heart")
+                            }
+                        }
+                    }
+                    
+                    Text("Clothes")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .padding(.leading)
+                    
+                    if items.isEmpty {
+                        ContentUnavailableView("Empty Clothes", systemImage: "tshirt.fill", description: Text("There are no clothes in your list. Start by uploading your clothes images!"))
+                    } else {
+                        LazyVGrid(columns: gridItems, spacing: 20) {
+                            ForEach(items) { item in
+                                if let image = UIImage(data: item.image) {
+                                    ImageView(image: image, isChecked: item.isChecked) {
+                                        updateItem(item: item)
+                                    }
+                                }
                             }
                         }
                     }
@@ -37,16 +62,22 @@ struct ContentView: View {
                         HStack {
                             Spacer()
                             
-                            Text("Upload Image")
-                                .foregroundStyle(.white)
-                                .fontWeight(.semibold)
-                                .padding(.vertical, 8)
+                            HStack {
+                                Spacer()
+                                
+                                Text("Upload Image")
+                                    .foregroundStyle(.white)
+                                    .fontWeight(.semibold)
+                                    .padding(.vertical, 12)
+                                
+                                Spacer()
+                            }
+                            .frame(width: UIScreen.main.bounds.width / 2.3)
+                            .background(Color.blue)
+                            .cornerRadius(8)
                             
                             Spacer()
                         }
-                        .background(Color.blue)
-                        .cornerRadius(4)
-                        .padding(.horizontal)
                     }
                 }
                 .onChange(of: avatarItem) {
