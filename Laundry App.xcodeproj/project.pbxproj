@@ -12,6 +12,7 @@
 		51B490AE2B7DED5900FD8715 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490AD2B7DED5900FD8715 /* Item.swift */; };
 		51B490B02B7DED5C00FD8715 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51B490AF2B7DED5C00FD8715 /* Assets.xcassets */; };
 		51B490B32B7DED5C00FD8715 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51B490B22B7DED5C00FD8715 /* Preview Assets.xcassets */; };
+		51B490BD2B7E056900FD8715 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490BC2B7E056900FD8715 /* ImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		51B490AD2B7DED5900FD8715 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		51B490AF2B7DED5C00FD8715 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51B490B22B7DED5C00FD8715 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		51B490BC2B7E056900FD8715 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,8 +56,8 @@
 			isa = PBXGroup;
 			children = (
 				51B490A92B7DED5900FD8715 /* Laundry_AppApp.swift */,
-				51B490AB2B7DED5900FD8715 /* ContentView.swift */,
-				51B490AD2B7DED5900FD8715 /* Item.swift */,
+				51B490B92B7E054B00FD8715 /* View */,
+				51B490BA2B7E055400FD8715 /* Model */,
 				51B490AF2B7DED5C00FD8715 /* Assets.xcassets */,
 				51B490B12B7DED5C00FD8715 /* Preview Content */,
 			);
@@ -68,6 +70,31 @@
 				51B490B22B7DED5C00FD8715 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		51B490B92B7E054B00FD8715 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				51B490BB2B7E055D00FD8715 /* Reusable */,
+				51B490AB2B7DED5900FD8715 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		51B490BA2B7E055400FD8715 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				51B490AD2B7DED5900FD8715 /* Item.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		51B490BB2B7E055D00FD8715 /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				51B490BC2B7E056900FD8715 /* ImageView.swift */,
+			);
+			path = Reusable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +167,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51B490BD2B7E056900FD8715 /* ImageView.swift in Sources */,
 				51B490AC2B7DED5900FD8715 /* ContentView.swift in Sources */,
 				51B490AE2B7DED5900FD8715 /* Item.swift in Sources */,
 				51B490AA2B7DED5900FD8715 /* Laundry_AppApp.swift in Sources */,
