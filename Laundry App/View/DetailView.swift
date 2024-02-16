@@ -24,7 +24,27 @@ struct DetailView: View {
                 Image(uiImage: image)
                     .resizable()
                     .cornerRadius(12)
+                    .overlay {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundStyle(.red)
+                                    .onTapGesture {
+                                        withAnimation(.smooth) {
+                                            laundryData?.image.removeAll(where: { $0 == selectedImage })
+                                            self.selectedImage = laundryData?.image[0] ?? Data()
+                                        }
+                                    }
+                            }
+                            
+                            Spacer()
+                        }
+                    }
                     .padding()
+            } else {
+                ContentUnavailableView("No Images yet", systemImage: "plus.rectangle.on.folder.fill", description: Text("Please add some images to serve as your clothes prove."))
             }
             
             ScrollView(.horizontal) {
@@ -57,7 +77,9 @@ struct DetailView: View {
             Task {
                 for item in selectedImages {
                     if let imageData = try? await item.loadTransferable(type: Data.self) {
-                        laundryData?.image.append(imageData)
+                        withAnimation(.smooth) {
+                            laundryData?.image.append(imageData)
+                        }
                     } else {
                         print("Failed")
                     }
@@ -72,8 +94,10 @@ struct DetailView: View {
 
             do {
                 let laundry = try modelContext.fetch(fetchDescriptor)
-                laundryData = laundry.first(where: { $0 == item })
-                selectedImage = laundryData?.image[0]
+                withAnimation(.smooth) {
+                    laundryData = laundry.first(where: { $0 == item })
+                    selectedImage = laundryData?.image[0]
+                }
             } catch {
                 print("Failed to load Laundry model.")
             }
