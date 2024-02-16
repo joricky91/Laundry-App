@@ -17,7 +17,7 @@ struct LaundryGridView: View {
     var laundry: [LaundryImage]
     var emptyContentData: EmptyContentData
     
-    let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 2) - 20, maximum: (UIScreen.main.bounds.width / 2) - 20)), count: 2)
+    let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 3) - 16, maximum: (UIScreen.main.bounds.width / 3) - 16)), count: 3)
     
     var body: some View {
         if laundry.isEmpty {
@@ -25,12 +25,12 @@ struct LaundryGridView: View {
         } else {
             LazyVGrid(columns: gridItems, spacing: 20) {
                 ForEach(laundry) { item in
-                    if let image = UIImage(data: item.image[0])?.jpegData(compressionQuality: 0.2) {
+                    if let image = UIImage(data: item.image[0])?.resized(withPercentage: 0.3) {
                         VStack(spacing: 8) {
                             NavigationLink(destination: DetailView(item: item)) {
-                                Image(uiImage: UIImage(data: image)!)
+                                Image(uiImage: image)
                                     .resizable()
-                                    .frame(height: (UIScreen.main.bounds.width / 2) - 20)
+                                    .frame(height: (UIScreen.main.bounds.width / 3) - 16)
                                     .cornerRadius(8)
                             }
                             

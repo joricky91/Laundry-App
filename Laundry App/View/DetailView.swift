@@ -20,7 +20,7 @@ struct DetailView: View {
     
     var body: some View {
         VStack {
-            if let selectedImage, let image = UIImage(data: selectedImage) {
+            if let selectedImage, let image = UIImage(data: selectedImage)?.resized(withPercentage: 0.5) {
                 Image(uiImage: image)
                     .resizable()
                     .cornerRadius(12)
