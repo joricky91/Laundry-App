@@ -14,6 +14,8 @@
 		51B490B32B7DED5C00FD8715 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51B490B22B7DED5C00FD8715 /* Preview Assets.xcassets */; };
 		51B490BD2B7E056900FD8715 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490BC2B7E056900FD8715 /* ImageView.swift */; };
 		51B490BF2B7E128100FD8715 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51B490BE2B7E128100FD8715 /* Launch Screen.storyboard */; };
+		51DBFEA32B7F01DD00AD26EA /* LaundryGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DBFEA22B7F01DD00AD26EA /* LaundryGridView.swift */; };
+		51DBFEA52B7F0B8800AD26EA /* PhotosPickerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DBFEA42B7F0B8800AD26EA /* PhotosPickerLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		51B490B22B7DED5C00FD8715 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		51B490BC2B7E056900FD8715 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		51B490BE2B7E128100FD8715 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		51DBFEA22B7F01DD00AD26EA /* LaundryGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryGridView.swift; sourceTree = "<group>"; };
+		51DBFEA42B7F0B8800AD26EA /* PhotosPickerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPickerLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				51B490BC2B7E056900FD8715 /* ImageView.swift */,
+				51DBFEA22B7F01DD00AD26EA /* LaundryGridView.swift */,
+				51DBFEA42B7F0B8800AD26EA /* PhotosPickerLabel.swift */,
 			);
 			path = Reusable;
 			sourceTree = "<group>";
@@ -174,6 +180,8 @@
 				51B490BD2B7E056900FD8715 /* ImageView.swift in Sources */,
 				51B490AC2B7DED5900FD8715 /* ContentView.swift in Sources */,
 				51B490AE2B7DED5900FD8715 /* Item.swift in Sources */,
+				51DBFEA52B7F0B8800AD26EA /* PhotosPickerLabel.swift in Sources */,
+				51DBFEA32B7F01DD00AD26EA /* LaundryGridView.swift in Sources */,
 				51B490AA2B7DED5900FD8715 /* Laundry_AppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
