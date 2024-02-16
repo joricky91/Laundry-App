@@ -17,7 +17,7 @@ struct ContentView: View {
     
     @Query private var items: [LaundryImage]
     
-    @State private var avatarItem: PhotosPickerItem?
+    @State private var avatarItem: [PhotosPickerItem] = []
     
     let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 2) - 20, maximum: (UIScreen.main.bounds.width / 2) - 20)), count: 2)
 
@@ -82,10 +82,12 @@ struct ContentView: View {
                 }
                 .onChange(of: avatarItem) {
                     Task {
-                        if let imageData = try? await avatarItem?.loadTransferable(type: Data.self) {
-                            addItem(data: imageData)
-                        } else {
-                            print("Failed")
+                        for item in avatarItem {
+                            if let imageData = try? await item.loadTransferable(type: Data.self) {
+                                addItem(data: imageData)
+                            } else {
+                                print("Failed")
+                            }
                         }
                     }
                 }
