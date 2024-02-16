@@ -10,10 +10,10 @@ import SwiftData
 
 @Model
 final class LaundryImage {
-    var image: Data
+    var image: [Data]
     var isChecked: Bool
     
-    init(image: Data, isChecked: Bool = false) {
+    init(image: [Data], isChecked: Bool = false) {
         self.image = image
         self.isChecked = isChecked
     }

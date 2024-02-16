@@ -25,10 +25,10 @@ struct LaundryGridView: View {
         } else {
             LazyVGrid(columns: gridItems, spacing: 20) {
                 ForEach(laundry) { item in
-                    if let image = UIImage(data: item.image) {
+                    if let image = UIImage(data: item.image[0])?.jpegData(compressionQuality: 0.2) {
                         VStack(spacing: 8) {
                             NavigationLink(destination: DetailView(item: item)) {
-                                Image(uiImage: image)
+                                Image(uiImage: UIImage(data: image)!)
                                     .resizable()
                                     .frame(height: (UIScreen.main.bounds.width / 2) - 20)
                                     .cornerRadius(8)

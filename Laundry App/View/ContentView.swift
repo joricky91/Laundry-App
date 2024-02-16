@@ -18,7 +18,7 @@ struct ContentView: View {
     
     @Query private var items: [LaundryImage]
     
-    @State private var avatarItem: [PhotosPickerItem] = []
+    @State private var selectedImages: [PhotosPickerItem] = []
 
     var body: some View {
         NavigationStack {
@@ -33,15 +33,15 @@ struct ContentView: View {
                     
                     LaundryGridView(laundry: items, emptyContentData: EmptyContentData(title: "Empty Clothes", systemImageName: "tshirt.fill", description: "There are no clothes in your list. Start by uploading your clothes images!"))
                     
-                    PhotosPicker(selection: $avatarItem, photoLibrary: .shared()) {
+                    PhotosPicker(selection: $selectedImages, photoLibrary: .shared()) {
                         PhotosPickerLabel()
                     }
                 }
-                .onChange(of: avatarItem) {
+                .onChange(of: selectedImages) {
                     Task {
-                        for item in avatarItem {
+                        for item in selectedImages {
                             if let imageData = try? await item.loadTransferable(type: Data.self) {
-                                addItem(data: imageData)
+                                addItem(data: [imageData])
                             } else {
                                 print("Failed")
                             }
@@ -53,7 +53,7 @@ struct ContentView: View {
         }
     }
 
-    private func addItem(data: Data) {
+    private func addItem(data: [Data]) {
         withAnimation {
             let newItem = LaundryImage(image: data)
             modelContext.insert(newItem)
