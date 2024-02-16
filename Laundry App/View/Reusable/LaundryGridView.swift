@@ -19,8 +19,6 @@ struct LaundryGridView: View {
     
     let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 2) - 20, maximum: (UIScreen.main.bounds.width / 2) - 20)), count: 2)
     
-//    var action: (() -> Void)
-    
     var body: some View {
         if laundry.isEmpty {
             ContentUnavailableView(emptyContentData.title, systemImage: emptyContentData.systemImageName, description: Text(emptyContentData.description))
@@ -28,8 +26,19 @@ struct LaundryGridView: View {
             LazyVGrid(columns: gridItems, spacing: 20) {
                 ForEach(laundry) { item in
                     if let image = UIImage(data: item.image) {
-                        ImageView(image: image, isChecked: item.isChecked) {
-                            updateItem(item: item)
+                        VStack(spacing: 8) {
+                            NavigationLink(destination: DetailView(item: item)) {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .frame(height: (UIScreen.main.bounds.width / 2) - 20)
+                                    .cornerRadius(8)
+                            }
+                            
+                            Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
+                                .foregroundStyle(item.isChecked ? .blue : .white)
+                                .onTapGesture {
+                                    updateItem(item: item)
+                                }
                         }
                     }
                 }
