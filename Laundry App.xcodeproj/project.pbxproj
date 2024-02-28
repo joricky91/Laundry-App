@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5166B59B2B82FBDE00FE9BA0 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166B59A2B82FBDE00FE9BA0 /* MainTabView.swift */; };
+		5166B59D2B82FBEC00FE9BA0 /* ClothesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166B59C2B82FBEC00FE9BA0 /* ClothesListView.swift */; };
 		51B490AA2B7DED5900FD8715 /* Laundry_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490A92B7DED5900FD8715 /* Laundry_AppApp.swift */; };
 		51B490AC2B7DED5900FD8715 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490AB2B7DED5900FD8715 /* ContentView.swift */; };
 		51B490AE2B7DED5900FD8715 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490AD2B7DED5900FD8715 /* Item.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5166B59A2B82FBDE00FE9BA0 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		5166B59C2B82FBEC00FE9BA0 /* ClothesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesListView.swift; sourceTree = "<group>"; };
 		51B490A62B7DED5900FD8715 /* Laundry App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Laundry App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		51B490A92B7DED5900FD8715 /* Laundry_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Laundry_AppApp.swift; sourceTree = "<group>"; };
 		51B490AB2B7DED5900FD8715 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -85,6 +89,8 @@
 				51B490BB2B7E055D00FD8715 /* Reusable */,
 				51B490AB2B7DED5900FD8715 /* ContentView.swift */,
 				51DBFEAB2B7F145800AD26EA /* DetailView.swift */,
+				5166B59A2B82FBDE00FE9BA0 /* MainTabView.swift */,
+				5166B59C2B82FBEC00FE9BA0 /* ClothesListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -178,9 +184,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				51B490AC2B7DED5900FD8715 /* ContentView.swift in Sources */,
+				5166B59D2B82FBEC00FE9BA0 /* ClothesListView.swift in Sources */,
 				51B490AE2B7DED5900FD8715 /* Item.swift in Sources */,
 				51DBFEAC2B7F145800AD26EA /* DetailView.swift in Sources */,
 				51DBFEA52B7F0B8800AD26EA /* PhotosPickerLabel.swift in Sources */,
+				5166B59B2B82FBDE00FE9BA0 /* MainTabView.swift in Sources */,
 				51DBFEA32B7F01DD00AD26EA /* LaundryGridView.swift in Sources */,
 				51B490AA2B7DED5900FD8715 /* Laundry_AppApp.swift in Sources */,
 			);
@@ -323,7 +331,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -358,7 +366,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (

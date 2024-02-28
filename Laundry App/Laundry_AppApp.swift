@@ -13,6 +13,7 @@ struct Laundry_AppApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             LaundryImage.self,
+//            LaundryData.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,7 +26,7 @@ struct Laundry_AppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainTabView()
         }
         .modelContainer(sharedModelContainer)
     }

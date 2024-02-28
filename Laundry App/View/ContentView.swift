@@ -9,6 +9,46 @@ import SwiftUI
 import SwiftData
 import PhotosUI
 
+@ModelActor
+actor CachedDataHandler {
+    func persist(items: [LaundryImage]) {
+        items.forEach { modelContext.insert($0) }
+        try? modelContext.save()
+    }
+    
+    func updateItem(item: LaundryImage) {
+        withAnimation {
+            item.isChecked.toggle()
+        }
+    }
+    
+    func fetchChecked() -> [LaundryImage] {
+        let fetchRequest = FetchDescriptor<LaundryImage>(predicate: #Predicate { item in
+            item.isChecked
+        })
+        var data: [LaundryImage] = []
+        
+        if let fetched = try? modelContext.fetch(fetchRequest) {
+            data = fetched
+            return data
+        }
+        
+        return []
+    }
+    
+    func fetch() -> [LaundryImage] {
+        let fetchRequest = FetchDescriptor<LaundryImage>()
+        var data: [LaundryImage] = []
+        
+        if let fetched = try? modelContext.fetch(fetchRequest) {
+            data = fetched
+            return data
+        }
+        
+        return []
+    }
+}
+
 extension UIImage {
     func resized(withPercentage percentage: CGFloat, isOpaque: Bool = true) -> UIImage? {
             let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
@@ -22,65 +62,34 @@ extension UIImage {
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
+    @State var laundry: [LaundryImage] = []
     
-    @Query(filter: #Predicate<LaundryImage> { laundry in
-        laundry.isChecked
-    }) var laundry: [LaundryImage]
-    
-    @Query private var items: [LaundryImage]
-    
-    @State private var selectedImages: [PhotosPickerItem] = []
+    let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 3) - 16, maximum: (UIScreen.main.bounds.width / 3) - 16)), count: 3)
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    LaundryGridView(laundry: laundry, emptyContentData: EmptyContentData(title: "Empty Laundry", systemImageName: "washer.fill", description: "No clothes currently in laundry"))
-                    
-                    Text("Clothes")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .padding(.leading)
-                    
-                    LaundryGridView(laundry: items, emptyContentData: EmptyContentData(title: "Empty Clothes", systemImageName: "tshirt.fill", description: "There are no clothes in your list. Start by uploading your clothes images!"))
-                    
-                    PhotosPicker(selection: $selectedImages, photoLibrary: .shared()) {
-                        PhotosPickerLabel()
-                    }
-                }
-                .onChange(of: selectedImages) {
-                    Task {
-                        for item in selectedImages {
-                            if let imageData = try? await item.loadTransferable(type: Data.self) {
-                                addItem(data: [imageData])
-                            } else {
-                                print("Failed")
+                    if laundry.isEmpty {
+                        ContentUnavailableView("Empty Clothes", systemImage: "tshirt.fill", description: Text("There are no clothes in your list. Start by uploading your clothes images!"))
+                    } else {
+                        LazyVGrid(columns: gridItems, spacing: 20) {
+                            ForEach(laundry) { item in
+                                LaundryGridView(laundry: item) {
+                                    Task(priority: .background) {
+                                        let cache = CachedDataHandler(modelContainer: modelContext.container)
+                                        laundry = await cache.fetchChecked()
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
             .navigationTitle("Laundry")
-        }
-    }
-
-    private func addItem(data: [Data]) {
-        withAnimation {
-            let newItem = LaundryImage(image: data)
-            modelContext.insert(newItem)
-        }
-    }
-    
-    private func updateItem(item: LaundryImage) {
-        withAnimation {
-            item.isChecked.toggle()
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+            .task(priority: .background) {
+                let cache = CachedDataHandler(modelContainer: modelContext.container)
+                laundry = await cache.fetchChecked()
             }
         }
     }

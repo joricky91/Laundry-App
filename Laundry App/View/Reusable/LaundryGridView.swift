@@ -14,34 +14,27 @@ struct EmptyContentData {
 }
 
 struct LaundryGridView: View {
-    var laundry: [LaundryImage]
-    var emptyContentData: EmptyContentData
-    
+    @Bindable var laundry: LaundryImage
+
     let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 3) - 16, maximum: (UIScreen.main.bounds.width / 3) - 16)), count: 3)
+    var action: (() -> Void)?
     
     var body: some View {
-        if laundry.isEmpty {
-            ContentUnavailableView(emptyContentData.title, systemImage: emptyContentData.systemImageName, description: Text(emptyContentData.description))
-        } else {
-            LazyVGrid(columns: gridItems, spacing: 20) {
-                ForEach(laundry) { item in
-                    if let image = UIImage(data: item.image[0])?.resized(withPercentage: 0.3) {
-                        VStack(spacing: 8) {
-                            NavigationLink(destination: DetailView(item: item)) {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .frame(height: (UIScreen.main.bounds.width / 3) - 16)
-                                    .cornerRadius(8)
-                            }
-                            
-                            Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
-                                .foregroundStyle(item.isChecked ? .blue : .white)
-                                .onTapGesture {
-                                    updateItem(item: item)
-                                }
-                        }
-                    }
+        if let image = UIImage(data: laundry.image)?.resized(withPercentage: 0.3) {
+            VStack(spacing: 8) {
+                NavigationLink(destination: DetailView(item: laundry)) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .frame(height: (UIScreen.main.bounds.width / 3) - 16)
+                        .cornerRadius(8)
                 }
+                
+                Image(systemName: laundry.isChecked ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(laundry.isChecked ? .blue : .white)
+                    .onTapGesture {
+                        updateItem(item: laundry)
+                        action?()
+                    }
             }
         }
     }

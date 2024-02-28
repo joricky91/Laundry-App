@@ -10,11 +10,21 @@ import SwiftData
 
 @Model
 final class LaundryImage {
-    var image: [Data]
+    @Attribute(.externalStorage) var image: Data
+    var otherImages: [LaundryData]?
     var isChecked: Bool
     
-    init(image: [Data], isChecked: Bool = false) {
+    init(image: Data, isChecked: Bool = false) {
         self.image = image
         self.isChecked = isChecked
+    }
+}
+
+@Model
+final class LaundryData {
+    var imageData: LaundryImage
+    
+    init(imageData: LaundryImage) {
+        self.imageData = imageData
     }
 }
