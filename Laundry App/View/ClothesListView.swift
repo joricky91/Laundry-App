@@ -25,7 +25,7 @@ struct ClothesListView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
+                LazyVStack {
                     if showLoading {
                         LazyVStack {
                             ProgressView()
@@ -82,6 +82,7 @@ struct ClothesListView: View {
             }
             .photosPicker(isPresented: $presentPhotoPicker, selection: $selectedImages, photoLibrary: .shared())
         }
+        .toolbar(.visible, for: .tabBar)
     }
 }
 

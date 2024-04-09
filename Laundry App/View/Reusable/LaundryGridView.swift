@@ -15,17 +15,17 @@ struct EmptyContentData {
 
 struct LaundryGridView: View {
     @Bindable var laundry: LaundryImage
-
-    let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 3) - 16, maximum: (UIScreen.main.bounds.width / 3) - 16)), count: 3)
     var action: (() -> Void)?
     
+    @State private var loadedImage: UIImage? = nil
+    
     var body: some View {
-        if let image = UIImage(data: laundry.image)?.resized(withPercentage: 0.3) {
-            VStack(spacing: 8) {
+        VStack(spacing: 8) {
+            if let image = loadedImage {
                 NavigationLink(destination: DetailView(item: laundry)) {
                     Image(uiImage: image)
                         .resizable()
-                        .frame(height: (UIScreen.main.bounds.width / 3) - 16)
+                        .frame(height: (UIScreen.main.bounds.width / 3.5))
                         .cornerRadius(8)
                 }
                 
@@ -35,6 +35,20 @@ struct LaundryGridView: View {
                         updateItem(item: laundry)
                         action?()
                     }
+            } else {
+                ProgressView()
+            }
+        }
+        .onAppear {
+            loadImage()
+        }
+    }
+    
+    private func loadImage() {
+        Task {
+            if let uiImage = UIImage(data: laundry.image) {
+                let resizedImage = await uiImage.downsample(to: CGSize(width: (UIScreen.main.bounds.width / 3) - 16, height: (UIScreen.main.bounds.width / 2.5)), scale: 0.7)
+                loadedImage = resizedImage
             }
         }
     }
@@ -45,6 +59,7 @@ struct LaundryGridView: View {
         }
     }
 }
+
 
 //#Preview {
 //    LaundryGridView()
