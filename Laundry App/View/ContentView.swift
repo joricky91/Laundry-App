@@ -26,7 +26,7 @@ struct ContentView: View {
                             ForEach(laundry) { item in
                                 LaundryGridView(laundry: item) {
                                     Task(priority: .background) {
-                                        let cache = CachedDataHandler(modelContainer: modelContext.container)
+                                        let cache = CachedDataHandler(modelContext: modelContext)
                                         laundry = await cache.fetchChecked()
                                     }
                                 }
@@ -37,7 +37,7 @@ struct ContentView: View {
             }
             .navigationTitle("Laundry")
             .task(priority: .background) {
-                let cache = CachedDataHandler(modelContainer: modelContext.container)
+                let cache = CachedDataHandler(modelContext: modelContext)
                 laundry = await cache.fetchChecked()
             }
         }

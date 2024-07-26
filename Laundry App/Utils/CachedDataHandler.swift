@@ -8,42 +8,62 @@
 import SwiftUI
 import SwiftData
 
-@ModelActor
-actor CachedDataHandler {
-    func persist(items: [LaundryImage]) {
-        items.forEach { modelContext.insert($0) }
-        try? modelContext.save()
-    }
+@MainActor
+class CachedDataHandler {
     
-    func updateItem(item: LaundryImage) {
-        withAnimation {
-            item.isChecked.toggle()
+    let modelContext: ModelContext
+
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
+    }
+
+    func persist(items: [LaundryImage]) async {
+        // Ensure all operations on modelContext are within this method.
+        for item in items {
+            modelContext.insert(item)
+        }
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context: \(error)")
         }
     }
-    
-    func fetchChecked() -> [LaundryImage] {
-        let fetchRequest = FetchDescriptor<LaundryImage>(predicate: #Predicate { item in
-            item.isChecked
-        })
-        var data: [LaundryImage] = []
-        
-        if let fetched = try? modelContext.fetch(fetchRequest) {
-            data = fetched
-            return data
+
+    func updateItem(item: LaundryImage) async {
+        item.isChecked.toggle()
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context: \(error)")
         }
-        
-        return []
     }
-    
-    func fetch() -> [LaundryImage] {
+
+    func deleteItem(item: LaundryImage) async {
+        modelContext.delete(item)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context: \(error)")
+        }
+    }
+
+    func fetchChecked() async -> [LaundryImage] {
+        let fetchRequest = FetchDescriptor<LaundryImage>(predicate: #Predicate { $0.isChecked })
+        do {
+            return try modelContext.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch checked items: \(error)")
+            return []
+        }
+    }
+
+    func fetch() async -> [LaundryImage] {
         let fetchRequest = FetchDescriptor<LaundryImage>()
-        var data: [LaundryImage] = []
-        
-        if let fetched = try? modelContext.fetch(fetchRequest) {
-            data = fetched
-            return data
+        do {
+            return try modelContext.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch items: \(error)")
+            return []
         }
-        
-        return []
     }
 }

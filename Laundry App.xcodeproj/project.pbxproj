@@ -17,6 +17,19 @@
 		51B490B02B7DED5C00FD8715 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51B490AF2B7DED5C00FD8715 /* Assets.xcassets */; };
 		51B490B32B7DED5C00FD8715 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51B490B22B7DED5C00FD8715 /* Preview Assets.xcassets */; };
 		51B490BF2B7E128100FD8715 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51B490BE2B7E128100FD8715 /* Launch Screen.storyboard */; };
+		51B63B0D2C538165001500D9 /* CachedDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5132DE752BB16F67009B963C /* CachedDataHandler.swift */; };
+		51B63B0E2C538165001500D9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490AB2B7DED5900FD8715 /* ContentView.swift */; };
+		51B63B0F2C538165001500D9 /* ClothesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166B59C2B82FBEC00FE9BA0 /* ClothesListView.swift */; };
+		51B63B102C538165001500D9 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490AD2B7DED5900FD8715 /* Item.swift */; };
+		51B63B112C538165001500D9 /* UIImage + Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5132DE722BB16F3B009B963C /* UIImage + Ext.swift */; };
+		51B63B122C538165001500D9 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DBFEAB2B7F145800AD26EA /* DetailView.swift */; };
+		51B63B132C538165001500D9 /* PhotosPickerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DBFEA42B7F0B8800AD26EA /* PhotosPickerLabel.swift */; };
+		51B63B142C538165001500D9 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5166B59A2B82FBDE00FE9BA0 /* MainTabView.swift */; };
+		51B63B152C538165001500D9 /* LaundryGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DBFEA22B7F01DD00AD26EA /* LaundryGridView.swift */; };
+		51B63B162C538165001500D9 /* Laundry_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51B490A92B7DED5900FD8715 /* Laundry_AppApp.swift */; };
+		51B63B192C538165001500D9 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51B490BE2B7E128100FD8715 /* Launch Screen.storyboard */; };
+		51B63B1A2C538165001500D9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51B490B22B7DED5C00FD8715 /* Preview Assets.xcassets */; };
+		51B63B1B2C538165001500D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51B490AF2B7DED5C00FD8715 /* Assets.xcassets */; };
 		51DBFEA32B7F01DD00AD26EA /* LaundryGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DBFEA22B7F01DD00AD26EA /* LaundryGridView.swift */; };
 		51DBFEA52B7F0B8800AD26EA /* PhotosPickerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DBFEA42B7F0B8800AD26EA /* PhotosPickerLabel.swift */; };
 		51DBFEAC2B7F145800AD26EA /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DBFEAB2B7F145800AD26EA /* DetailView.swift */; };
@@ -34,6 +47,12 @@
 		51B490AF2B7DED5C00FD8715 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51B490B22B7DED5C00FD8715 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		51B490BE2B7E128100FD8715 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		51B63AE82C537FEC001500D9 /* Laundry_TestingApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Laundry_TestingApp.swift; sourceTree = "<group>"; };
+		51B63AEA2C537FEC001500D9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		51B63AEC2C537FED001500D9 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		51B63AEE2C537FF0001500D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		51B63AF12C537FF0001500D9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		51B63B1F2C538165001500D9 /* Laundry Testing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Laundry Testing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		51DBFEA22B7F01DD00AD26EA /* LaundryGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryGridView.swift; sourceTree = "<group>"; };
 		51DBFEA42B7F0B8800AD26EA /* PhotosPickerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPickerLabel.swift; sourceTree = "<group>"; };
 		51DBFEAB2B7F145800AD26EA /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -41,6 +60,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		51B490A32B7DED5900FD8715 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51B63B172C538165001500D9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -71,6 +97,7 @@
 			children = (
 				51B490BE2B7E128100FD8715 /* Launch Screen.storyboard */,
 				51B490A82B7DED5900FD8715 /* Laundry App */,
+				51B63AE72C537FEC001500D9 /* Laundry Testing */,
 				51B490A72B7DED5900FD8715 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				51B490A62B7DED5900FD8715 /* Laundry App.app */,
+				51B63B1F2C538165001500D9 /* Laundry Testing.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,6 +162,26 @@
 			path = Reusable;
 			sourceTree = "<group>";
 		};
+		51B63AE72C537FEC001500D9 /* Laundry Testing */ = {
+			isa = PBXGroup;
+			children = (
+				51B63AE82C537FEC001500D9 /* Laundry_TestingApp.swift */,
+				51B63AEA2C537FEC001500D9 /* ContentView.swift */,
+				51B63AEC2C537FED001500D9 /* Item.swift */,
+				51B63AEE2C537FF0001500D9 /* Assets.xcassets */,
+				51B63AF02C537FF0001500D9 /* Preview Content */,
+			);
+			path = "Laundry Testing";
+			sourceTree = "<group>";
+		};
+		51B63AF02C537FF0001500D9 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				51B63AF12C537FF0001500D9 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -152,6 +200,23 @@
 			name = "Laundry App";
 			productName = "Laundry App";
 			productReference = 51B490A62B7DED5900FD8715 /* Laundry App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		51B63B0B2C538165001500D9 /* Laundry Testing */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 51B63B1C2C538165001500D9 /* Build configuration list for PBXNativeTarget "Laundry Testing" */;
+			buildPhases = (
+				51B63B0C2C538165001500D9 /* Sources */,
+				51B63B172C538165001500D9 /* Frameworks */,
+				51B63B182C538165001500D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Laundry Testing";
+			productName = "Laundry App";
+			productReference = 51B63B1F2C538165001500D9 /* Laundry Testing.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -183,6 +248,7 @@
 			projectRoot = "";
 			targets = (
 				51B490A52B7DED5900FD8715 /* Laundry App */,
+				51B63B0B2C538165001500D9 /* Laundry Testing */,
 			);
 		};
 /* End PBXProject section */
@@ -195,6 +261,16 @@
 				51B490BF2B7E128100FD8715 /* Launch Screen.storyboard in Resources */,
 				51B490B32B7DED5C00FD8715 /* Preview Assets.xcassets in Resources */,
 				51B490B02B7DED5C00FD8715 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51B63B182C538165001500D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51B63B192C538165001500D9 /* Launch Screen.storyboard in Resources */,
+				51B63B1A2C538165001500D9 /* Preview Assets.xcassets in Resources */,
+				51B63B1B2C538165001500D9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +291,23 @@
 				5166B59B2B82FBDE00FE9BA0 /* MainTabView.swift in Sources */,
 				51DBFEA32B7F01DD00AD26EA /* LaundryGridView.swift in Sources */,
 				51B490AA2B7DED5900FD8715 /* Laundry_AppApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51B63B0C2C538165001500D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				51B63B0D2C538165001500D9 /* CachedDataHandler.swift in Sources */,
+				51B63B0E2C538165001500D9 /* ContentView.swift in Sources */,
+				51B63B0F2C538165001500D9 /* ClothesListView.swift in Sources */,
+				51B63B102C538165001500D9 /* Item.swift in Sources */,
+				51B63B112C538165001500D9 /* UIImage + Ext.swift in Sources */,
+				51B63B122C538165001500D9 /* DetailView.swift in Sources */,
+				51B63B132C538165001500D9 /* PhotosPickerLabel.swift in Sources */,
+				51B63B142C538165001500D9 /* MainTabView.swift in Sources */,
+				51B63B152C538165001500D9 /* LaundryGridView.swift in Sources */,
+				51B63B162C538165001500D9 /* Laundry_AppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +504,77 @@
 			};
 			name = Release;
 		};
+		51B63B1D2C538165001500D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Laundry App/Preview Content\"";
+				DEVELOPMENT_TEAM = SHR59DG262;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Laundry Stage";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jonathanRicky.Laundry-Testing";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		51B63B1E2C538165001500D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Laundry App/Preview Content\"";
+				DEVELOPMENT_TEAM = SHR59DG262;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Laundry Stage";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jonathanRicky.Laundry-Testing";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -428,6 +592,15 @@
 			buildConfigurations = (
 				51B490B72B7DED5C00FD8715 /* Debug */,
 				51B490B82B7DED5C00FD8715 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		51B63B1C2C538165001500D9 /* Build configuration list for PBXNativeTarget "Laundry Testing" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				51B63B1D2C538165001500D9 /* Debug */,
+				51B63B1E2C538165001500D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

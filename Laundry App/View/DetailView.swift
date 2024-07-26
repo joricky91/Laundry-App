@@ -27,18 +27,6 @@ struct DetailView: View {
                             .resizable()
                             .frame(height: UIScreen.main.bounds.height / 1.6)
                             .cornerRadius(12)
-//                                .overlay {
-//                                    VStack {
-//                                        HStack {
-//                                            Spacer()
-//
-//                                            Image(systemName: "minus.circle.fill")
-//                                                .foregroundStyle(.red)
-//                                        }
-//
-//                                        Spacer()
-//                                    }
-//                                }
                             .padding(.bottom, 32)
                     }
                 } else {
@@ -62,28 +50,32 @@ struct DetailView: View {
                     if let imageData = try? await item.loadTransferable(type: Data.self) {
                         var image = LaundryData(imageData: LaundryImage(image: imageData))
                         self.item.otherImages?.append(image)
-                        self.images.append(imageData)
                     } else {
                         print("Failed")
                     }
                 }
+                displayImage()
             }
         }
         .navigationTitle("Clothes Detail")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            images.removeAll()
-            addToImage(image: item.image)
-            
-            if let imagesData = item.otherImages {
-                imagesData.forEach { item in
-                    addToImage(image: item.imageData.image)
-                }
+            displayImage()
+        }
+    }
+    
+    func displayImage() {
+        images.removeAll()
+        addToImage(image: item.image)
+        
+        if let imagesData = item.otherImages {
+            imagesData.forEach { item in
+                addToImage(image: item.imageData.image)
             }
-            
-            images.forEach { image in
-                loadImage(data: image)
-            }
+        }
+        
+        images.forEach { image in
+            loadImage(data: image)
         }
     }
     

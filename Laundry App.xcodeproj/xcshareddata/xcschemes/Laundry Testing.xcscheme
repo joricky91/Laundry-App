@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "51B490A52B7DED5900FD8715"
-               BuildableName = "Laundry App.app"
-               BlueprintName = "Laundry App"
+               BlueprintIdentifier = "51B63B0B2C538165001500D9"
+               BuildableName = "Laundry Testing.app"
+               BlueprintName = "Laundry Testing"
                ReferencedContainer = "container:Laundry App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,7 +30,7 @@
       shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -43,9 +43,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "51B490A52B7DED5900FD8715"
-            BuildableName = "Laundry App.app"
-            BlueprintName = "Laundry App"
+            BlueprintIdentifier = "51B63B0B2C538165001500D9"
+            BuildableName = "Laundry Testing.app"
+            BlueprintName = "Laundry Testing"
             ReferencedContainer = "container:Laundry App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -60,9 +60,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "51B490A52B7DED5900FD8715"
-            BuildableName = "Laundry App.app"
-            BlueprintName = "Laundry App"
+            BlueprintIdentifier = "51B63B0B2C538165001500D9"
+            BuildableName = "Laundry Testing.app"
+            BlueprintName = "Laundry Testing"
             ReferencedContainer = "container:Laundry App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

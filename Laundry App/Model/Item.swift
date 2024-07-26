@@ -13,10 +13,12 @@ final class LaundryImage {
     @Attribute(.externalStorage) var image: Data
     var otherImages: [LaundryData]?
     var isChecked: Bool
+    var isMainImage: Bool
     
-    init(image: Data, isChecked: Bool = false) {
+    init(image: Data, isChecked: Bool = false, isMainImage: Bool = false) {
         self.image = image
         self.isChecked = isChecked
+        self.isMainImage = isMainImage
     }
 }
 
