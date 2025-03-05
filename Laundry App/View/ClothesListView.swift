@@ -10,56 +10,30 @@ import SwiftData
 import PhotosUI
 
 struct ClothesListView: View {
+    
     @Environment(\.modelContext) private var modelContext
+    @Query var items: [LaundryImage]
     
-    @State var items: [LaundryImage] = []
-    @State private var selectedImages: [PhotosPickerItem] = []
-    @State private var imageDataItems: [LaundryImage] = []
-    
-    @State var showLoading: Bool = false
-    @State var shouldFetch: Bool = true
     @State var presentPhotoPicker: Bool = false
+    @State private var selectedImages: [PhotosPickerItem] = []
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
-                    if showLoading {
-                        LazyVStack {
-                            ProgressView()
-                        }
+                    if items.isEmpty {
+                        EmptyView()
                     } else {
-                        LazyVStack {
-                            if items.isEmpty {
-                                ContentUnavailableView("Empty Clothes", systemImage: "tshirt.fill", description: Text("There are no clothes in your list. Start by uploading your clothes images!"))
-                            } else {
-                                GridView(items: $items) { item in
-                                    Task(priority: .background) {
-                                        let cache = CachedDataHandler(modelContext: modelContext)
-                                        await cache.deleteItem(item: item)
-                                        items = await cache.fetch()
-                                    }
-                                }
-                            }
+                        GridView(items: items) { item in
+                            toggleSelection(item: item)
+                        } deleteAction: { item in
+                            deleteItem(item: item)
                         }
                     }
                 }
                 .onChange(of: selectedImages) {
                     Task(priority: .background) {
                         await handleSelectedImages()
-                        
-                        let cache = CachedDataHandler(modelContext: modelContext)
-                        await cache.persist(items: imageDataItems)
-                        items = await cache.fetch()
-                    }
-                }
-                .task(priority: .background) {
-                    if shouldFetch {
-                        let cache = CachedDataHandler(modelContext: modelContext)
-                        showLoading = true
-                        items = await cache.fetch()
-                        showLoading = false
-                        shouldFetch = false
                     }
                 }
             }
@@ -73,22 +47,11 @@ struct ClothesListView: View {
                     }
                 }
             }
-            .photosPicker(isPresented: $presentPhotoPicker, selection: $selectedImages, photoLibrary: .shared())
+            .photosPicker(isPresented: $presentPhotoPicker,
+                          selection: $selectedImages,
+                          photoLibrary: .shared())
         }
         .toolbar(.visible, for: .tabBar)
-    }
-    
-    internal func handleSelectedImages() async {
-        for item in selectedImages {
-            if let imageData = try? await item.loadTransferable(type: Data.self) {
-                let newItem = LaundryImage(image: imageData, isMainImage: true)
-                imageDataItems.append(newItem)
-            } else {
-                print("Failed")
-            }
-        }
-        
-        selectedImages.removeAll()
     }
 }
 
@@ -96,25 +59,65 @@ struct ClothesListView: View {
 //    ClothesListView()
 //}
 
-struct GridView: View {
-    let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 3) - 16, maximum: (UIScreen.main.bounds.width / 3) - 16)), count: 3)
-    @Binding var items: [LaundryImage]
-    var buttonAction: ((LaundryImage) -> Void)?
+extension ClothesListView {
     
-    var body: some View {
-        LazyVGrid(columns: gridItems, spacing: 20) {
-            ForEach(items) { item in
-                if item.isMainImage {
-                    LaundryGridView(laundry: item)
-                        .contextMenu {
-                            Button {
-                                buttonAction?(item)
-                            } label: {
-                                Text("Delete Cloth")
-                            }
-                        }
-                }
-            }
+    internal func toggleSelection(item: LaundryImage) {
+        withAnimation {
+            item.isChecked.toggle()
+        }
+        
+        do {
+            try modelContext.save()
+        } catch {
+            print("❌ Failed to save toggle state: \(error)")
         }
     }
+    
+    internal func deleteItem(item: LaundryImage) {
+        withAnimation {
+            modelContext.delete(item)
+        }
+        
+        do {
+            try modelContext.save()
+        } catch {
+            print("❌ Failed to delete item: \(error)")
+        }
+    }
+    
+    internal func handleSelectedImages() async {
+        let fileManager = FileManager.default
+        let directory = fileManager.urls(for: .documentDirectory,
+                                         in: .userDomainMask).first!
+        
+        for item in selectedImages {
+            if let imageData = try? await item.loadTransferable(type: Data.self) {
+                let filename = UUID().uuidString + ".jpg"
+                let fileURL = directory.appendingPathComponent(filename)
+                
+                do {
+                    try imageData.write(to: fileURL)
+                    let newItem = LaundryImage(imagePath: filename,
+                                               isMainImage: true)
+                    saveToLocal(item: newItem)
+                } catch {
+                    print("❌ Failed to save image: \(error)")
+                }
+            } else {
+                print("❌ Failed to load image data")
+            }
+        }
+        
+        selectedImages.removeAll()
+    }
+    
+    internal func saveToLocal(item: LaundryImage) {
+        do {
+            modelContext.insert(item)
+            try modelContext.save()
+        } catch {
+            print("❌ Failed to save image paths in SwiftData: \(error)")
+        }
+    }
+    
 }

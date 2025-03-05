@@ -17,22 +17,23 @@ extension UIImage {
         }
     }
     
-    func downsample(to pointSize: CGSize, scale: CGFloat) -> UIImage? {
-        guard let imageData = self.jpegData(compressionQuality: 1.0) else {
-            return UIImage()
+    func downsample(imageURL: URL, to pointSize: CGSize, scale: CGFloat) -> UIImage? {
+        let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
+        let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
+        guard let imageSource = CGImageSourceCreateWithURL(imageURL as CFURL, imageSourceOptions) else {
+            return nil
         }
         
-        let imageSourceOptions = [kCGImageSourceShouldCache: false] as CFDictionary
-        let imageSource = CGImageSourceCreateWithData(imageData as CFData, imageSourceOptions)!
+        let downsampledOptions = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels
+        ] as CFDictionary
         
-        let maxDimensionInPixels = max(pointSize.width, pointSize.height) * scale
-        
-        let downsampledOptions = [kCGImageSourceCreateThumbnailFromImageAlways: true,
-                                          kCGImageSourceShouldCacheImmediately: true,
-                                    kCGImageSourceCreateThumbnailWithTransform: true,
-                                           kCGImageSourceThumbnailMaxPixelSize: maxDimensionInPixels] as CFDictionary
-        
-        let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampledOptions)!
+        guard let downsampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downsampledOptions) else {
+            return nil
+        }
         
         return UIImage(cgImage: downsampledImage)
     }

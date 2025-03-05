@@ -32,30 +32,38 @@ struct LaundryGridView: View {
                 Image(systemName: laundry.isChecked ? "checkmark.circle.fill" : "circle")
                     .foregroundStyle(laundry.isChecked ? .blue : .white)
                     .onTapGesture {
-                        updateItem(item: laundry)
                         action?()
                     }
             } else {
                 ProgressView()
-            }
-        }
-        .onAppear {
-            loadImage()
-        }
-    }
-    
-    private func loadImage() {
-        Task {
-            if let uiImage = UIImage(data: laundry.image) {
-                let resizedImage = await uiImage.downsample(to: CGSize(width: (UIScreen.main.bounds.width / 3) - 16, height: (UIScreen.main.bounds.width / 2.5)), scale: 0.7)
-                loadedImage = resizedImage
+                    .task {
+                        await loadImage()
+                    }
             }
         }
     }
     
-    private func updateItem(item: LaundryImage) {
-        withAnimation {
-            item.isChecked.toggle()
+    private func loadImage() async {
+        Task(priority: .background) {
+            let fileManager = FileManager.default
+            let directory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = directory.appendingPathComponent(laundry.imagePath)
+            
+            do {
+                let imageData = try Data(contentsOf: fileURL)
+                let image = UIImage(data: imageData)
+                let resizedImage = image?.downsample(
+                    imageURL: fileURL,
+                    to: CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width / 3),
+                    scale: 0.7
+                )
+                
+                DispatchQueue.main.async {
+                    loadedImage = resizedImage
+                }
+            } catch {
+                print("❌ Error loading image: \(error)")
+            }
         }
     }
 }

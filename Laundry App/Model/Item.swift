@@ -10,15 +10,19 @@ import SwiftData
 
 @Model
 final class LaundryImage {
-    @Attribute(.externalStorage) var image: Data
+    var imagePath: String
     var otherImages: [LaundryData]?
     var isChecked: Bool
     var isMainImage: Bool
     
-    init(image: Data, isChecked: Bool = false, isMainImage: Bool = false) {
-        self.image = image
+    init(imagePath: String, isChecked: Bool = false, isMainImage: Bool = false) {
+        self.imagePath = imagePath
         self.isChecked = isChecked
         self.isMainImage = isMainImage
+    }
+    
+    var imageURL: URL? {
+        URL(fileURLWithPath: imagePath)
     }
 }
 

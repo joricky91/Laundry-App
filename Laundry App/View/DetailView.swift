@@ -17,6 +17,7 @@ struct DetailView: View {
     @State var images: [Data] = []
     
     @State private var loadedImage: [UIImage] = []
+    @State private var isFirstImageLoaded: Bool = false
     
     var body: some View {
         VStack {
@@ -46,14 +47,7 @@ struct DetailView: View {
         }
         .onChange(of: selectedImages) {
             Task(priority: .background) {
-                for item in selectedImages {
-                    if let imageData = try? await item.loadTransferable(type: Data.self) {
-                        var image = LaundryData(imageData: LaundryImage(image: imageData))
-                        self.item.otherImages?.append(image)
-                    } else {
-                        print("Failed")
-                    }
-                }
+                await handleSelectedImages()
                 displayImage()
             }
         }
@@ -65,31 +59,79 @@ struct DetailView: View {
     }
     
     func displayImage() {
-        images.removeAll()
-        addToImage(image: item.image)
+        if !isFirstImageLoaded {
+            loadImage(path: item.imagePath)
+            isFirstImageLoaded = true
+        }
         
         if let imagesData = item.otherImages {
             imagesData.forEach { item in
-                addToImage(image: item.imageData.image)
+                loadImage(path: item.imageData.imagePath,
+                          firstImage: false)
+            }
+        }
+    }
+    
+    internal func handleSelectedImages() async {
+        let fileManager = FileManager.default
+        let directory = fileManager.urls(for: .documentDirectory,
+                                         in: .userDomainMask).first!
+        
+        for item in selectedImages {
+            if let imageData = try? await item.loadTransferable(type: Data.self) {
+                let filename = UUID().uuidString + ".jpg"
+                let fileURL = directory.appendingPathComponent(filename)
+                
+                do {
+                    try imageData.write(to: fileURL)
+                    let newItem = LaundryData(imageData: LaundryImage(imagePath: filename,
+                                                                      isMainImage: true))
+                    self.item.otherImages?.append(newItem)
+                    save()
+                } catch {
+                    print("❌ Failed to save image: \(error)")
+                }
+            } else {
+                print("❌ Failed to load image data")
             }
         }
         
-        images.forEach { image in
-            loadImage(data: image)
-        }
+        selectedImages.removeAll()
     }
     
-    private func loadImage(data: Data) {
-        Task {
-            if let uiImage = UIImage(data: data) {
-                let resizedImage = await uiImage.downsample(to: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), scale: 0.7)
-                loadedImage.append(resizedImage!)
+    internal func save() {
+        do {
+            try modelContext.save()
+        } catch {
+            print("❌ Failed to save image paths in SwiftData: \(error)")
+        }
+    }
+
+    private func loadImage(path: String, firstImage: Bool = true) {
+        Task(priority: .background) {
+            let fileManager = FileManager.default
+            let directory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = directory.appendingPathComponent(path)
+            
+            do {
+                let imageData = try Data(contentsOf: fileURL)
+                let image = UIImage(data: imageData)
+                let width = UIScreen.main.bounds.width / (firstImage ? 1 : 3)
+                let height = UIScreen.main.bounds.height / (firstImage ? 1 : 3)
+                let resizedImage = image?.downsample(
+                    imageURL: fileURL,
+                    to: CGSize(width: width, height: height),
+                    scale: 1.0
+                )
+                
+                DispatchQueue.main.async {
+                    guard let resizedImage else { return }
+                    loadedImage.append(resizedImage)
+                }
+            } catch {
+                print("❌ Error loading image: \(error)")
             }
         }
-    }
-    
-    func addToImage(image: Data) {
-        images.append(image)
     }
 }
 
@@ -101,7 +143,8 @@ struct ImageSelectedView: View {
     @Binding var selectedImage: Data
     
     var body: some View {
-        if let image = UIImage(data: selectedImage), let resized = image.downsample(to: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), scale: 0.8) {
+        if let image = UIImage(data: selectedImage), 
+            let resized = image.downsample(imageURL: URL(string: "")!, to: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), scale: 0.8) {
             Image(uiImage: resized)
                 .resizable()
                 .cornerRadius(12)
@@ -119,7 +162,9 @@ struct ImageSelectedView: View {
                 }
                 .padding()
         } else {
-            ContentUnavailableView("No Images yet", systemImage: "plus.rectangle.on.folder.fill", description: Text("Please add some images to serve as your clothes prove."))
+            ContentUnavailableView("No Images yet",
+                                   systemImage: "plus.rectangle.on.folder.fill",
+                                   description: Text("Please add some images to serve as your clothes prove."))
         }
     }
 }

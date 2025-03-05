@@ -10,42 +10,57 @@ import SwiftData
 import PhotosUI
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @State var laundry: [LaundryImage] = []
     
-    let gridItems: [GridItem] = Array.init(repeating: GridItem(.flexible(minimum: (UIScreen.main.bounds.width / 3) - 16, maximum: (UIScreen.main.bounds.width / 3) - 16)), count: 3)
+    @Environment(\.modelContext) private var modelContext
+    @Query(filter: #Predicate<LaundryImage> { $0.isChecked })
+    var laundry: [LaundryImage]
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 20) {
                     if laundry.isEmpty {
-                        ContentUnavailableView("Empty Clothes", systemImage: "tshirt.fill", description: Text("There are no clothes in your list. Start by uploading your clothes images!"))
+                        EmptyView()
                     } else {
-                        LazyVGrid(columns: gridItems, spacing: 20) {
-                            ForEach(laundry) { item in
-                                LaundryGridView(laundry: item) {
-                                    Task(priority: .background) {
-                                        let cache = CachedDataHandler(modelContext: modelContext)
-                                        laundry = await cache.fetchChecked()
-                                    }
-                                }
-                            }
+                        GridView(items: laundry) { item in
+                            toggleSelection(item: item)
+                        } deleteAction: { item in
+                            deleteItem(item: item)
                         }
                     }
                 }
             }
             .navigationTitle("Laundry")
-            .task(priority: .background) {
-                let cache = CachedDataHandler(modelContext: modelContext)
-                laundry = await cache.fetchChecked()
-            }
         }
         .toolbar(.visible, for: .tabBar)
     }
+    
+    internal func toggleSelection(item: LaundryImage) {
+        withAnimation {
+            item.isChecked.toggle()
+        }
+        
+        do {
+            try modelContext.save()
+        } catch {
+            print("❌ Failed to save toggle state: \(error)")
+        }
+    }
+    
+    internal func deleteItem(item: LaundryImage) {
+        withAnimation {
+            modelContext.delete(item)
+        }
+        
+        do {
+            try modelContext.save()
+        } catch {
+            print("❌ Failed to delete item: \(error)")
+        }
+    }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(for: LaundryImage.self, inMemory: true)
-}
+//#Preview {
+//    ContentView()
+//        .modelContainer(for: LaundryImage.self, inMemory: true)
+//}
