@@ -17,6 +17,8 @@ struct ClothesListView: View {
     @State var presentPhotoPicker: Bool = false
     @State private var selectedImages: [PhotosPickerItem] = []
     
+    let manager = SwiftDataManager.shared
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -25,9 +27,14 @@ struct ClothesListView: View {
                         EmptyView()
                     } else {
                         GridView(items: items) { item in
-                            toggleSelection(item: item)
+                            manager.updateItem(context: modelContext) {
+                                withAnimation {
+                                    item.isChecked.toggle()
+                                }
+                            }
                         } deleteAction: { item in
-                            deleteItem(item: item)
+                            manager.deleteItem(context: modelContext,
+                                               item: item)
                         }
                     }
                 }
@@ -40,11 +47,7 @@ struct ClothesListView: View {
             .navigationTitle("Clothes")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        presentPhotoPicker = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                    ToolbarItemView
                 }
             }
             .photosPicker(isPresented: $presentPhotoPicker,
@@ -61,27 +64,11 @@ struct ClothesListView: View {
 
 extension ClothesListView {
     
-    internal func toggleSelection(item: LaundryImage) {
-        withAnimation {
-            item.isChecked.toggle()
-        }
-        
-        do {
-            try modelContext.save()
-        } catch {
-            print("❌ Failed to save toggle state: \(error)")
-        }
-    }
-    
-    internal func deleteItem(item: LaundryImage) {
-        withAnimation {
-            modelContext.delete(item)
-        }
-        
-        do {
-            try modelContext.save()
-        } catch {
-            print("❌ Failed to delete item: \(error)")
+    var ToolbarItemView: some View {
+        Button {
+            presentPhotoPicker = true
+        } label: {
+            Image(systemName: "plus")
         }
     }
     
@@ -99,7 +86,9 @@ extension ClothesListView {
                     try imageData.write(to: fileURL)
                     let newItem = LaundryImage(imagePath: filename,
                                                isMainImage: true)
-                    saveToLocal(item: newItem)
+                    
+                    manager.addToLocal(context: modelContext,
+                                                       item: newItem)
                 } catch {
                     print("❌ Failed to save image: \(error)")
                 }
@@ -109,15 +98,6 @@ extension ClothesListView {
         }
         
         selectedImages.removeAll()
-    }
-    
-    internal func saveToLocal(item: LaundryImage) {
-        do {
-            modelContext.insert(item)
-            try modelContext.save()
-        } catch {
-            print("❌ Failed to save image paths in SwiftData: \(error)")
-        }
     }
     
 }

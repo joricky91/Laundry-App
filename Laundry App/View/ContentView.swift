@@ -14,6 +14,8 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(filter: #Predicate<LaundryImage> { $0.isChecked })
     var laundry: [LaundryImage]
+    
+    let manager = SwiftDataManager.shared
 
     var body: some View {
         NavigationStack {
@@ -23,9 +25,14 @@ struct ContentView: View {
                         EmptyView()
                     } else {
                         GridView(items: laundry) { item in
-                            toggleSelection(item: item)
+                            manager.updateItem(context: modelContext) {
+                                withAnimation {
+                                    item.isChecked.toggle()
+                                }
+                            }
                         } deleteAction: { item in
-                            deleteItem(item: item)
+                            manager.deleteItem(context: modelContext,
+                                               item: item)
                         }
                     }
                 }
@@ -33,30 +40,6 @@ struct ContentView: View {
             .navigationTitle("Laundry")
         }
         .toolbar(.visible, for: .tabBar)
-    }
-    
-    internal func toggleSelection(item: LaundryImage) {
-        withAnimation {
-            item.isChecked.toggle()
-        }
-        
-        do {
-            try modelContext.save()
-        } catch {
-            print("❌ Failed to save toggle state: \(error)")
-        }
-    }
-    
-    internal func deleteItem(item: LaundryImage) {
-        withAnimation {
-            modelContext.delete(item)
-        }
-        
-        do {
-            try modelContext.save()
-        } catch {
-            print("❌ Failed to delete item: \(error)")
-        }
     }
 }
 
